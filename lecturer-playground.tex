@@ -9,15 +9,26 @@
 % Author: Paul Isambert.
 % Date: July 2010.
 
-% \documentclass{minimal}
-% \usepackage{luatex85}
-% \usepackage{luaotfload}
-% \usepackage{lecturer}
+\documentclass{article}
 
-\input luatex85.sty
-\input luaotfload.sty
-\input lecturer
+\usepackage{luatex85}
+\usepackage{luaotfload}
+\RequirePackage{shellesc}
+\usepackage{minted}
+\usepackage{lecturer}
+\usepackage{fontspec}
+\usepackage{graphics}
+% \usepackage{xcolor}
+
+% \input luatex85.sty
+% \input luaotfload.sty
+% \input lecturer
 %\setsansfont{Gill Sans MT}
+
+\usemintedstyle{tango}
+
+\setmonofont{Fira Mono}
+\setmainfont{Fira Sans}
 
 \font\maintitlefont    = {name: League Gothic} at 100pt
 \font\slidetitlefont   = {name: Reklame Script DEMO} at 30pt
@@ -25,26 +36,42 @@
 \font\subtitlefont     = {name: Reklame Script DEMO}
 \font\mainsubtitlefont = {name: Reklame Script DEMO} at 50pt
 \font\titlefont        = {name: Fira Sans}
+\font\tenrm={name: Fira Sans} at 10pt
 
-\newcolor{lightgrey}{grey}{.85}
-\newcolor{darkgrey}{grey}{.7}
-
+% \newcolor{lightgrey}{grey}{.85}
+% \newcolor{darkgrey}{grey}{.7}
 % \newcolor{darkred}{rgb}{.6 0 0}
 % \newcolor{bluenavy}{rgb}{.12 .14 .24}
 % \newcolor{coral}{rgb}{.93 .29 .36}
 
-\newcolor{limegreen}{rgb}{.68 .89 .22}
-\newcolor{green}{rgb}{.56 .75 .0}
-\newcolor{darkred}{rgb}{.0 .66 .78}
-\newcolor{bluenavy}{rgb}{.0 .66 .78}
-\newcolor{coral}{rgb}{.97 .94 .90}
-\newcolor{freshwhite}{rgb}{.97 .94 .90}
+% \newcolor{tropiteal}{html}{00A8C6}
+% \newcolor{tealdrop}{html}{40C0CB}
+% \newcolor{whitetrash}{html}{F9F2E7}
+% \newcolor{atomicbikini}{html}{AEE239}
+% \newcolor{feebleweek}{html}{8FBE00}
+
+\newcolor{tropiteal}{rgb}{0 168 198}
+\newcolor{tealdrop}{rgb}{64 192 203}
+% \newcolor{whitetrash}{rgb}{249 242 231}
+%\newcolor{atomicbikini}{rgb}{174 226 57}
+\newcolor{feebleweek}{rgb}{143 190 0}
 
 
-\font\tenrm={name: Fira Sans} at 10pt
-\font\tenbf={name: Fira Sans Bold} at 10pt
-\font\tenit={name: Fira Sans Italic} at 10pt
-\font\tentt={name: Courier New} at 8pt
+\newcolor{atomicbikini}{rgb}{.68 .89 .22}
+% \newcolor{green}{rgb}{.56 .75 .0}
+% \newcolor{darkred}{rgb}{.0 .66 .78}
+\newcolor{tropiteal}{rgb}{.0 .66 .78}
+% \newcolor{coral}{rgb}{.97 .94 .90}
+\newcolor{whitetrash}{rgb}{.97 .94 .90}
+
+
+\newcolor{maintitlebackground}{rgb}{.0 .66 .78} % tropiteal
+\newcolor{maintitleforeground}{rgb}{.97 .94 .90} % whitetrash
+\newcolor{mainsubtitleforeground}{rgb}{.97 .94 .90} % whitetrash
+\newcolor{titleforeground}{rgb}{.68 .89 .22} % atomic bikini
+\newcolor{slidebackground}{rgb}{.97 .94 .90} % whitetrash
+\newcolor{itemcolor}{rgb}{.0 .66 .78} % tropiteal
+
 
 \def\Subtitle{A Shapeless Primer}
 
@@ -61,7 +88,7 @@
 
 \setparameter slide:
   everyslide    = \everyslide
-  hsize         = ".6\pdfpagewidth"
+  % hsize         = ".6\pdfpagewidth"
   top           = 76pt
   bottom        = 42pt
   areas*        = "title subtitle date"
@@ -70,33 +97,12 @@
   topskip       = \baselineskip
   width         = 16cm
   height        = 9cm
-  background    = freshwhite
+  background    = slidebackground
+  % left          = 1cm % default 2cm
+  % right         = 1cm
 
 \def\everyslide{%
-  % \position{topleft}\Title
-  % \position{topright}\sectiontitle
   \position{titlebar}\slidetitle
-  % \position{bottomleft}\Author
-  % \position{bottommiddle}{%
-  %   \noindent
-  %   \dobutton\firstslide\FirstPage
-  %   \dobutton\prevslide\PrevPage
-  %   \dobutton\prevstep\PrevStep\kern.3em
-  %   \dobutton\showbookmarks\Bookmarks\kern.3em
-  %   \dobutton\nextstep\NextStep
-  %   \dobutton\nextslide\NextPage
-  %   \dobutton\lastslide\LastPage\unskip}
-  % \position{bottomright}\Date
-  \presentationonly{
-    \position{math}{%
-      ${a\over b}=\sqrt2$\par
-      $({a\over b})^2=2$\par
-      ${a^2\over b^2}=2$\par
-      $a^2=2b^2$\par
-      $(2k)^2=2b^2$\par
-      $4k^2=2b^2$\par
-      $2k^2=b^2$\par
-      ${a\over b}\neq\sqrt2$}}
   }
 % \def\dobutton#1#2{%
 %   #1[push]{\rlap#2\buttonborder}\hskip1em
@@ -116,23 +122,10 @@
   left       = 3em
   height     = 40pt
   % background = lightgrey
-  foreground = green
+  foreground = titleforeground
   topskip    = 30pt
   hpos       = fr
   font       = \slidetitlefont
-
-%
-% The maths on the right.
-%
-\setarea{math}
-  width      = ".2\pdfpagewidth"
-  hshift*    = 0pt
-  vshift     = 58pt
-  vshift*    = 18pt
-  foreground = "grey .75"
-  hpos       = fr
-  vpos       = center
-  baselineskip = 18pt
 
 
 %
@@ -143,14 +136,14 @@
   bookmark   = false
   hpos       = rr
   everyslide = {}
-  background = bluenavy
+  background = maintitlebackground
 
 \setarea{title}
   hshift*    = 1cm
   vshift     = 2.5cm
   height     = 45pt
   topskip    = 50pt
-  foreground = coral
+  foreground = maintitleforeground
   top        = 1em
   %frame      = "width=.2em, corner=round, color=darkgrey"
   hpos       = rr
@@ -161,7 +154,7 @@
   vshift     = 6cm
   height     = 28pt
   topskip    = 20pt
-  foreground = coral
+  foreground = mainsubtitleforeground
   frame      = "width=.2em, corner=round"
   hpos       = rr
   font       = \mainsubtitlefont
@@ -200,44 +193,16 @@
   everyvstep everyhstep = {}
   vskip hskip = 0pt
 
-\def\domath#1 #2 #3 {%
-  \emptystep[on=#2,off=#3]
-  \domathstep{#1}%
-  }
-\def\Domath#1 #2 {%
-  \emptystep[off=#2,visible=true]
-  \domathstep{#1}%
-  }
-\def\domathstep#1{%
-  \presentationorhandout{\position{math}[0pt,#1\dimexpr18pt\relax]}{\position{math}}
-    {\quitvmode\llap{\mathsym\kern.3em}\usecolor{black}{\typemath{#1}}}%
-  }
-
-\def\typemath#1{%
-  $\ifcase#1
-      {a\over b}=\sqrt2
-  \or ({a\over b})^2=2
-  \or {a^2\over b^2}=2
-  \or a^2=2b^2
-  \or (2k)^2=2b^2
-  \or 4k^2=2b^2
-  \or 2k^2=b^2
-  \or {a\over b}\neq\sqrt2
-  \fi$}
-%
-% Navigation symbols.
-%
-
 %
 % Item symbols.
 %
 \newsymbol\itemsymbol[.6em,padding=0pt]
-  {color darkred, + 1 0, + 0 1, + -1 0, fill,}
+  {color itemcolor, + 1 0, + 0 1, + -1 0, fill,}
 \newsymbol\mathsym[.5em,padding=0pt]
-  {color darkred,
+  {color itemcolor,
   + 1 .5, + -1 .5, fill,}
 \newsymbol\backsym[.5em,padding=0pt]
-  {color darkred, move 1 0, + -1 .5, + 1 .5, fill,}
+  {color itemcolor, move 1 0, + -1 .5, + 1 .5, fill,}
 %
 % Navigation to the appendices.
 %
@@ -266,7 +231,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%\begin{document}
+\begin{document}
 \titleslide
 
 \position{title}\Title
@@ -282,12 +247,11 @@
 
 \section{Demonstration}
 
-\slide[A simple assumption]
+\begin{slide}[Some source code]
+  \inputminted[fontsize=\small]{kotlin}{source/fizzbuzz.kt}
+\end{slide}
 
-\domath0 A B
-\domath1 B C
-\domath2 C D
-\domath3 D {}
+\slide[A simple assumption]
 
 \step Some say the square root of 2 isn't rational.
 \step Suppose
@@ -308,10 +272,6 @@ integers without a common factor.
 
 \slide[Its consequences]
 
-\Domath3   A
-\domath4 A B
-\domath5 B C
-\domath6 C D
 
 \step[visible="true"] So what?
 \step So $a$ is even. Because only even numbers produce even squares.
@@ -331,7 +291,7 @@ any integer.
 
 \slide[The problem]
 
-\domath7 A {}
+% \domath7 A {}
 
 \step[visible=true] And but so we said $a$ and $b$ have no common factor.
 
@@ -398,4 +358,4 @@ of paradoxical. Or just opportunistic.
 
 \endappslide
 
-\bye
+\end{document}
