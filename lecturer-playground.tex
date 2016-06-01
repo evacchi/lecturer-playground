@@ -32,22 +32,24 @@
     }
   } 
 
-  \setpalettekey{title-slide-background}
-  \setpalettekey{title-slide-foreground}
+  \setpalettekey{first-slide-background}
+  \setpalettekey{first-slide-title}
+  \setpalettekey{first-slide-subtitle}
   \setpalettekey{slide-background}
   \setpalettekey{slide-title-foreground}
+  \setpalettekey{slide-background}
+  \setpalettekey{slide-foreground}
   \setpalettekey{item-color}
 }
 
 % \input luatex85.sty
 % \input luaotfload.sty
 % \input lecturer
-%\setsansfont{Gill Sans MT}
+\setmainfont{Gill Sans}
 
-\usemintedstyle{tango}
 
 \setmonofont{Fira Mono}
-\setmainfont{Fira Sans}
+% \setmainfont{Fira Sans}
 
 \font\maintitlefont    = {name: League Gothic} at 100pt
 \font\slidetitlefont   = {name: Reklame Script DEMO} at 30pt
@@ -55,23 +57,68 @@
 \font\subtitlefont     = {name: Reklame Script DEMO}
 \font\mainsubtitlefont = {name: Reklame Script DEMO} at 50pt
 \font\titlefont        = {name: Fira Sans}
-\font\tenrm={name: Fira Sans} at 10pt
 
 
 \setparameter fresh-cut-day:
-  tropiteal     = ".0  .66 .78"
-  whitetrash    = ".97 .94 .90"
-  atomic-bikini = ".68 .89 .22"
+  tropiteal     = "0.00  0.66  0.78"
+  teal-drop     = "0.25  0.75  0.80"
+  whitetrash    = "0.98  0.95  0.91"
+  atomic-bikini = "0.68  0.89  0.22"
+  feeble-week   = "0.56  0.75  0.00"
+  black         = " 0 0 0 "
+
+\setparameter kotaku:
+  pink-drinks      = "0.89 0.11 0.35"
+  popular-girl     = "0.62 0.05 0.22"
+  grr-ey           = "0.20 0.20 0.20"
+  moonage-daydream = "0.98 1.00 0.89"
+  kotak            = "0.51 0.64 0.00"
+
+\setparameter vivacious:
+  kaaskop-pink    = "0.80 0.05 0.22"
+  orange-sakura   = "0.90 0.47 0.12"
+  spring-wind     = "0.78 0.81 0.01"
+  polpa-di-pera   = "0.97 0.99 0.76"
+  blue-lagoon     = "0.09 0.58 0.65"
+
+
+% \setparameter palette:
+%   first-slide-background = blue-lagoon
+%   first-slide-title      = kaaskop-pink
+%   first-slide-subtitle   = orange-sakura
+%   slide-background       = polpa-di-pera
+%   slide-title-foreground = kaaskop-pink
+%   slide-foreground       = blue-lagoon
+%   item-color             = spring-wind
+
+% \usemintedstyle{tango}
+% \updatepalette{vivacious}
+
+% \setparameter palette:
+%   first-slide-background = grr-ey
+%   first-slide-title      = popular-girl
+%   first-slide-subtitle   = pink-drinks
+%   slide-background       = grr-ey
+%   slide-title-foreground = kotak
+%   slide-foreground       = moonage-daydream
+%   item-color             = pink-drinks
+
+% \updatepalette{kotaku}
+% \usemintedstyle{monokai}
+
 
 
 \setparameter palette:
-  title-slide-background = tropiteal
-  title-slide-foreground = whitetrash
+  first-slide-background = tropiteal
+  first-slide-title      = whitetrash
+  first-slide-subtitle   = whitetrash
+  slide-title-foreground = feeble-week
+  slide-foreground       = black
   slide-background       = whitetrash
-  slide-title-foreground = atomic-bikini
   item-color             = tropiteal
 
 \updatepalette{fresh-cut-day}
+\usemintedstyle{tango}
 
 
 
@@ -85,8 +132,7 @@
   date           = "Some centuries B.C."
   fullscreen     = true
   autofullscreen = true
-  font           = \tenrm % Plain TeX's default, but must be specified
-                          % to set it back after a \step with another font.
+  font           = \rmfamily
 
 \setparameter slide:
   everyslide    = \everyslide
@@ -100,23 +146,19 @@
   width         = 16cm
   height        = 9cm
   background    = slide-background
+  foreground    = slide-foreground
   % left          = 1cm % default 2cm
   % right         = 1cm
 
 \def\everyslide{%
   \position{titlebar}\slidetitle
-  }
-% \def\dobutton#1#2{%
-%   #1[push]{\rlap#2\buttonborder}\hskip1em
-%    }
+}
 
 %
 % Top and bottom bars.
 %
-
 \setarea{topleft topright bottomleft bottommiddle bottomright}
   height = 18pt
-
 
 
 \setarea{titlebar}
@@ -138,14 +180,14 @@
   bookmark   = false
   hpos       = rr
   everyslide = {}
-  background = title-slide-background
+  background = first-slide-background
 
 \setarea{title}
   hshift*    = 1cm
   vshift     = 2.5cm
   height     = 45pt
   topskip    = 50pt
-  foreground = title-slide-foreground
+  foreground = first-slide-title
   top        = 1em
   %frame      = "width=.2em, corner=round, color=darkgrey"
   hpos       = rr
@@ -156,7 +198,7 @@
   vshift     = 6cm
   height     = 28pt
   topskip    = 20pt
-  foreground = title-slide-foreground
+  foreground = first-slide-subtitle
   frame      = "width=.2em, corner=round"
   hpos       = rr
   font       = \mainsubtitlefont
@@ -174,19 +216,11 @@
 
 
 %
-% For the appendices.
-% We remove the math area instead
-% of redefining \everyslide.
-%
-\setslide{appslide}
-  areas* = "math title author date"
-
-%
 % Default step.
 %
 \setparameter step:
   everyvstep = "\quitvmode\llap{\itemsymbol\kern.5em}"
-  vskip = 18pt
+  vskip = 14pt
 
 %
 % Foreground math.
@@ -240,8 +274,39 @@
 
 \section{Demonstration}
 
-\begin{slide}[Some source code]
-  \inputminted[fontsize=\small]{kotlin}{source/fizzbuzz.kt}
+
+\begin{slide}[Section 2]
+
+baz
+
+
+\end{slide}
+
+\begin{slide}[Section 3]
+
+
+\step bazasdsad
+asdsad
+
+\step asda
+sad
+
+\step asdasds
+
+
+
+\end{slide}
+
+\begin{slide}[Code]
+
+\begin{minted}{java}
+public class Test {
+    public static void main(String[] args) {
+        System.out.println("lol code");
+    }
+}
+\end{minted}
+
 \end{slide}
 
 \slide[A simple assumption]
@@ -260,6 +325,10 @@ integers without a common factor.
 
 \endslide
 
+
+\begin{slide}[Some source code]
+  \inputminted[fontsize=\small]{kotlin}{source/fizzbuzz.kt}
+\end{slide}
 
 
 \slide[Its consequences]
