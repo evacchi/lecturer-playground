@@ -18,7 +18,7 @@
 \usepackage{lecturer}
 \usepackage{fontspec}
 \usepackage{graphics}
-% \usepackage{xcolor}
+\usepackage{xcolor}
 
 % \input luatex85.sty
 % \input luaotfload.sty
@@ -44,33 +44,68 @@
 % \newcolor{bluenavy}{rgb}{.12 .14 .24}
 % \newcolor{coral}{rgb}{.93 .29 .36}
 
-% \newcolor{tropiteal}{html}{00A8C6}
-% \newcolor{tealdrop}{html}{40C0CB}
-% \newcolor{whitetrash}{html}{F9F2E7}
-% \newcolor{atomicbikini}{html}{AEE239}
-% \newcolor{feebleweek}{html}{8FBE00}
+\setparameter fresh-cut-day:
+  tropiteal    = ".0  .66 .78"
+  whitetrash   = ".97 .94 .90"
+  atomicbikini = ".68 .89 .22"
 
-\newcolor{tropiteal}{rgb}{0 168 198}
-\newcolor{tealdrop}{rgb}{64 192 203}
-% \newcolor{whitetrash}{rgb}{249 242 231}
-%\newcolor{atomicbikini}{rgb}{174 226 57}
-\newcolor{feebleweek}{rgb}{143 190 0}
+\newcommand{\withpalette}[1]{
+  \newcommand{\palette}[1]{
+   \usevalue #1: ##1
+  }
+}
+\newcommand{\setpalettekey}[1]{
+  \newcolor{#1}{rgb}{
+  \usevalue palette: #1 
+}}
+
+\newcommand{\updatepalette} {
+  \setpalettekey{title-slide-background}
+  \setpalettekey{title-slide-foreground}
+}
+
+\withpalette{fresh-cut-day}
+\setparameter palette:
+  title-slide-background = { \palette{tropiteal} }
+  title-slide-foreground = { \usevalue fresh-cut-day : whitetrash }
+
+\updatepalette
+
+\definecolor{tropiteal}{HTML}{00A8C6}
+\definecolor{tealdrop}{HTML}{40C0CB}
+\definecolor{whitetrash}{HTML}{F9F2E7}
+\definecolor{atomicbikini}{HTML}{AEE239}
+\definecolor{feebleweek}{HTML}{8FBE00}
+
+% \newcolor{tropiteal}{rgb}{0 168 198}
+% \newcolor{tealdrop}{rgb}{64 192 203}
+% % \newcolor{whitetrash}{rgb}{249 242 231}
+% %\newcolor{atomicbikini}{rgb}{174 226 57}
+% \newcolor{feebleweek}{rgb}{143 190 0}
 
 
-\newcolor{atomicbikini}{rgb}{.68 .89 .22}
-% \newcolor{green}{rgb}{.56 .75 .0}
-% \newcolor{darkred}{rgb}{.0 .66 .78}
-\newcolor{tropiteal}{rgb}{.0 .66 .78}
-% \newcolor{coral}{rgb}{.97 .94 .90}
-\newcolor{whitetrash}{rgb}{.97 .94 .90}
+% \newcolor{atomicbikini}{rgb}{.68 .89 .22}
+% % \newcolor{green}{rgb}{.56 .75 .0}
+% % \newcolor{darkred}{rgb}{.0 .66 .78}
+% \newcolor{tropiteal}{rgb}{.0 .66 .78}
+% % \newcolor{coral}{rgb}{.97 .94 .90}
+% %\newcolor{whitetrash}{rgb}{.97 .94 .90}
+% \definecolor{whitetrash}{rgb}{.97 .94 .90}
 
 
-\newcolor{maintitlebackground}{rgb}{.0 .66 .78} % tropiteal
-\newcolor{maintitleforeground}{rgb}{.97 .94 .90} % whitetrash
+% \newcolor{maintitlebackground}{rgb}{.0 .66 .78} % tropiteal
 \newcolor{mainsubtitleforeground}{rgb}{.97 .94 .90} % whitetrash
-\newcolor{titleforeground}{rgb}{.68 .89 .22} % atomic bikini
+% \newcolor{titleforeground}{rgb}{.68 .89 .22} % atomic bikini
 \newcolor{slidebackground}{rgb}{.97 .94 .90} % whitetrash
 \newcolor{itemcolor}{rgb}{.0 .66 .78} % tropiteal
+
+% \colorlet{maintitlebackground}{tropiteal}
+% \colorlet{maintitleforeground}{whitetrash}
+% \colorlet{mainsubtitleforeground}{whitetrash} % whitetrash
+% \colorlet{titleforeground}{atomicbikini} % atomic bikini
+% \colorlet{slidebackground}{whitetrash} % whitetrash
+% \colorlet{itemcolor}{tropiteal} % tropiteal
+
 
 
 \def\Subtitle{A Shapeless Primer}
@@ -136,14 +171,14 @@
   bookmark   = false
   hpos       = rr
   everyslide = {}
-  background = maintitlebackground
+  background = title-slide-background
 
 \setarea{title}
   hshift*    = 1cm
   vshift     = 2.5cm
   height     = 45pt
   topskip    = 50pt
-  foreground = maintitleforeground
+  foreground = title-slide-foreground
   top        = 1em
   %frame      = "width=.2em, corner=round, color=darkgrey"
   hpos       = rr
