@@ -20,6 +20,25 @@
 \usepackage{graphics}
 \usepackage{xcolor}
 
+\newcommand{\updatepalette}[1]{
+
+  \newcommand{\palette}[1]{
+   \usevalue #1: ##1
+  }
+  \newcommand{\setpalettekey}[1]{
+    \storevalue\ColorId palette: ##1 
+    \newcolor{##1}{rgb}{ 
+      \palette{\ColorId} 
+    }
+  } 
+
+  \setpalettekey{title-slide-background}
+  \setpalettekey{title-slide-foreground}
+  \setpalettekey{slide-background}
+  \setpalettekey{slide-title-foreground}
+  \setpalettekey{item-color}
+}
+
 % \input luatex85.sty
 % \input luaotfload.sty
 % \input lecturer
@@ -38,73 +57,22 @@
 \font\titlefont        = {name: Fira Sans}
 \font\tenrm={name: Fira Sans} at 10pt
 
-% \newcolor{lightgrey}{grey}{.85}
-% \newcolor{darkgrey}{grey}{.7}
-% \newcolor{darkred}{rgb}{.6 0 0}
-% \newcolor{bluenavy}{rgb}{.12 .14 .24}
-% \newcolor{coral}{rgb}{.93 .29 .36}
 
 \setparameter fresh-cut-day:
-  tropiteal    = ".0  .66 .78"
-  whitetrash   = ".97 .94 .90"
-  atomicbikini = ".68 .89 .22"
+  tropiteal     = ".0  .66 .78"
+  whitetrash    = ".97 .94 .90"
+  atomic-bikini = ".68 .89 .22"
 
-\newcommand{\withpalette}[1]{
-  \newcommand{\palette}[1]{
-   \usevalue #1: ##1
-  }
-}
-\newcommand{\setpalettekey}[1]{
-  \newcolor{#1}{rgb}{
-  \usevalue palette: #1 
-}}
 
-\newcommand{\updatepalette} {
-  \setpalettekey{title-slide-background}
-  \setpalettekey{title-slide-foreground}
-}
 
-\withpalette{fresh-cut-day}
 \setparameter palette:
-  title-slide-background = { \palette{tropiteal} }
-  title-slide-foreground = { \usevalue fresh-cut-day : whitetrash }
+  title-slide-background = tropiteal
+  title-slide-foreground = whitetrash
+  slide-background       = whitetrash
+  slide-title-foreground = atomic-bikini
+  item-color             = tropiteal
 
-\updatepalette
-
-\definecolor{tropiteal}{HTML}{00A8C6}
-\definecolor{tealdrop}{HTML}{40C0CB}
-\definecolor{whitetrash}{HTML}{F9F2E7}
-\definecolor{atomicbikini}{HTML}{AEE239}
-\definecolor{feebleweek}{HTML}{8FBE00}
-
-% \newcolor{tropiteal}{rgb}{0 168 198}
-% \newcolor{tealdrop}{rgb}{64 192 203}
-% % \newcolor{whitetrash}{rgb}{249 242 231}
-% %\newcolor{atomicbikini}{rgb}{174 226 57}
-% \newcolor{feebleweek}{rgb}{143 190 0}
-
-
-% \newcolor{atomicbikini}{rgb}{.68 .89 .22}
-% % \newcolor{green}{rgb}{.56 .75 .0}
-% % \newcolor{darkred}{rgb}{.0 .66 .78}
-% \newcolor{tropiteal}{rgb}{.0 .66 .78}
-% % \newcolor{coral}{rgb}{.97 .94 .90}
-% %\newcolor{whitetrash}{rgb}{.97 .94 .90}
-% \definecolor{whitetrash}{rgb}{.97 .94 .90}
-
-
-% \newcolor{maintitlebackground}{rgb}{.0 .66 .78} % tropiteal
-\newcolor{mainsubtitleforeground}{rgb}{.97 .94 .90} % whitetrash
-% \newcolor{titleforeground}{rgb}{.68 .89 .22} % atomic bikini
-\newcolor{slidebackground}{rgb}{.97 .94 .90} % whitetrash
-\newcolor{itemcolor}{rgb}{.0 .66 .78} % tropiteal
-
-% \colorlet{maintitlebackground}{tropiteal}
-% \colorlet{maintitleforeground}{whitetrash}
-% \colorlet{mainsubtitleforeground}{whitetrash} % whitetrash
-% \colorlet{titleforeground}{atomicbikini} % atomic bikini
-% \colorlet{slidebackground}{whitetrash} % whitetrash
-% \colorlet{itemcolor}{tropiteal} % tropiteal
+\updatepalette{fresh-cut-day}
 
 
 
@@ -132,7 +100,7 @@
   topskip       = \baselineskip
   width         = 16cm
   height        = 9cm
-  background    = slidebackground
+  background    = slide-background
   % left          = 1cm % default 2cm
   % right         = 1cm
 
@@ -157,7 +125,7 @@
   left       = 3em
   height     = 40pt
   % background = lightgrey
-  foreground = titleforeground
+  foreground = slide-title-foreground
   topskip    = 30pt
   hpos       = fr
   font       = \slidetitlefont
@@ -189,7 +157,7 @@
   vshift     = 6cm
   height     = 28pt
   topskip    = 20pt
-  foreground = mainsubtitleforeground
+  foreground = title-slide-foreground
   frame      = "width=.2em, corner=round"
   hpos       = rr
   font       = \mainsubtitlefont
@@ -232,12 +200,12 @@
 % Item symbols.
 %
 \newsymbol\itemsymbol[.6em,padding=0pt]
-  {color itemcolor, + 1 0, + 0 1, + -1 0, fill,}
+  {color item-color, + 1 0, + 0 1, + -1 0, fill,}
 \newsymbol\mathsym[.5em,padding=0pt]
-  {color itemcolor,
+  {color item-color,
   + 1 .5, + -1 .5, fill,}
 \newsymbol\backsym[.5em,padding=0pt]
-  {color itemcolor, move 1 0, + -1 .5, + 1 .5, fill,}
+  {color item-color, move 1 0, + -1 .5, + 1 .5, fill,}
 %
 % Navigation to the appendices.
 %
