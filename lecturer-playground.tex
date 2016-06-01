@@ -64,7 +64,6 @@
   atomic-bikini = ".68 .89 .22"
 
 
-
 \setparameter palette:
   title-slide-background = tropiteal
   title-slide-foreground = whitetrash
@@ -206,16 +205,7 @@
   + 1 .5, + -1 .5, fill,}
 \newsymbol\backsym[.5em,padding=0pt]
   {color item-color, move 1 0, + -1 .5, + 1 .5, fill,}
-%
-% Navigation to the appendices.
-%
-\def\Back#1{%
-  \presentationonly{\usecolor{darkred}{\gotoB{#1}{\subtitlefont\backsym\kern.3em Back}}}%
-  }
-\def\To#1{%
-  \presentationorhandout{\usecolor{darkred}{\gotoA{#1}{\subtitlefont\mathsym\kern.3em See why}}}
-    {{\usecolor{darkred}{\subtitlefont\mathsym\kern.3em(See Appendices)}}}%
-  }
+
 %
 % And some structure.
 %
@@ -262,7 +252,6 @@
 
 \step[A] Then we could write it as this, where $a$ and $b$ are
 integers without a common factor.
-\To{app1}
 
 \step[B] But then we can also write this.
 \step[C] And this.
@@ -278,7 +267,6 @@ integers without a common factor.
 
 \step[visible="true"] So what?
 \step So $a$ is even. Because only even numbers produce even squares.
-\To{app2}
 
 \step[A] Being even means being expressible in the form $2k$, where $k$ is
 any integer.
@@ -312,53 +300,5 @@ any integer.
 
 
 
-
-\section{Appendices}
-
-
-
-\appslide[All fractions are reducible]
-
-
-\step[visible=true]
-Suppose $c\over d$ is a rational number. If c and d have no common
-factor, then $a=b$ and $b=d$. If they have a common factor,
-divide both by their greatest common divisor. The result
-is $a\over b$, with no common factor.
-
-\vskip\baselineskip
-\Back{app1}
-
-\endappslide
-
-
-
-\appslide[An even square has an even root,scale=true]
-
-\step[visible=true]
-An even number, by definition, is expressible
-in the form $2k$, where $k$ is any integer.
-On the other hand, an odd number is expressible
-by $$2k+1$$
-Thus the square of an odd number is
-$$(2k+1)^2$$
-i.e. $$4k^2+4k+1$$
-i.e. $$2\times2(k^2+k)+1$$
-which is of the form $2k+1$
-with $2(k^2+k)$ as $k$.
-Hence, an odd number produces an odd square,
-and thus if a square is even its root is even too.
-
-\vskip\baselineskip
-\Back{app2}
-
-\step[visible=true] You might have noticed
-that this page is slightly scaled to accommodate
-its content to the slide's declared {\usecolor{darkred}{vsize}}
-parameter. Actually, it is scaled because I stretch this
-paragraph so as to have too much content. Which is kind
-of paradoxical. Or just opportunistic.
-
-\endappslide
 
 \end{document}
