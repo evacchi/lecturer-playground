@@ -19,6 +19,8 @@
 \usepackage{fontspec}
 \usepackage{graphics}
 \usepackage{xcolor}
+\usepackage{markdown}
+\markdownSetup{fencedCode=true}
 
 \newcommand{\updatepalette}[1]{
 
@@ -51,11 +53,11 @@
 %\setmonofont{Fira Mono}
 \setmainfont{Fira Sans}
 
-\font\maintitlefont    = {name: League Gothic} at 100pt
+\font\maintitlefont    = {name: League Gothic} at 70pt
 \font\slidetitlefont   = {name: Reklame Script DEMO} at 30pt
 \font\slidetitlefont = {name: Fira Sans} at 20pt
 \font\subtitlefont     = {name: Reklame Script DEMO}
-\font\mainsubtitlefont = {name: Reklame Script DEMO} at 50pt
+\font\mainsubtitlefont = {name: Reklame Script DEMO} at 30pt
 \font\titlefont        = {name: Fira Sans}
 
 
@@ -122,22 +124,24 @@
 
 
 
-\def\Subtitle{A Shapeless Primer}
 
 
 \setparameter job:
   mode           = presentation % The handout is ready, just turn it on.
-  author         = "A Shapeless Primer"
-  title          = "BE LIKE WATER"
-  date           = "Some centuries B.C."
+  author         = "Edoardo Vacchi"
+  title          = "History of a Value"
+  date           = "May, 4 2018"
   fullscreen     = true
   autofullscreen = true
   font           = \rmfamily
 
+\def\Subtitle{A Glimpse into the Future of the JVM}
+
+
 \setparameter slide:
   everyslide    = \everyslide
   % hsize         = ".6\pdfpagewidth"
-  top           = 76pt
+  top           = 56pt
   bottom        = 42pt
   areas*        = "title subtitle date"
   bookmarkstyle = italic
@@ -162,7 +166,7 @@
 
 
 \setarea{titlebar}
-  vshift     = 35pt
+  vshift     = 15pt
   left       = 3em
   height     = 40pt
   % background = lightgrey
@@ -195,7 +199,7 @@
 
 \setarea{subtitle}
   hshift*    = 1cm
-  vshift     = 6cm
+  vshift     = 5.5cm
   height     = 28pt
   topskip    = 20pt
   foreground = first-slide-subtitle
@@ -221,6 +225,8 @@
 \setparameter step:
   everyvstep = "\quitvmode\llap{\itemsymbol\kern.5em}"
   vskip = 14pt
+
+\def\i{\vskip14pt\quitvmode\llap{\itemsymbol\kern.5em}}
 
 %
 % Foreground math.
@@ -285,13 +291,29 @@ baz
 \begin{slide}[Section 3]
 
 
-\step bazasdsad
+\i bazasdsad
 asdsad
 
-\step asda
+\i asda
 sad
 
-\step asdasds
+\i asdasds
+
+\begin{markdown}
+
+
+~~~java
+
+public class Test {
+    public static void main(String[] args) {
+        System.out.println("lol code");
+    }
+}
+~~~
+
+\end{markdown}
+
+
 
 
 
@@ -311,17 +333,17 @@ public class Test {
 
 \slide[A simple assumption]
 
-\step Some say the square root of 2 isn't rational.
-\step Suppose
+\i Some say the square root of 2 isn't rational.
+\i Suppose
  were.
 
-\step[A] Then we could write it as this, where $a$ and $b$ are
+\i Then we could write it as this, where $a$ and $b$ are
 integers without a common factor.
 
-\step[B] But then we can also write this.
-\step[C] And this.
-\step[D] And finally this.
-\step Which means that $a^2$ is even.
+\i But then we can also write this.
+\i And this.
+\i And finally this.
+\i Which means that $a^2$ is even.
 
 \endslide
 
@@ -334,16 +356,16 @@ integers without a common factor.
 \slide[Its consequences]
 
 
-\step[visible="true"] So what?
-\step So $a$ is even. Because only even numbers produce even squares.
+\i So what?
+\i So $a$ is even. Because only even numbers produce even squares.
 
-\step[A] Being even means being expressible in the form $2k$, where $k$ is
+\i Being even means being expressible in the form $2k$, where $k$ is
 any integer.
-\step[B] And $(2k)^2$ square gives $4k^2$.
+\i And $(2k)^2$ square gives $4k^2$.
 
-\step[C] Let's simplify.
-\step Thus $b^2$ is even.
-\step And $b$ is too.
+\i Let's simplify.
+\i Thus $b^2$ is even.
+\i And $b$ is too.
 
 \endslide
 
@@ -353,15 +375,15 @@ any integer.
 
 % \domath7 A {}
 
-\step[visible=true] And but so we said $a$ and $b$ have no common factor.
+\i And but so we said $a$ and $b$ have no common factor.
 
-\step If both are even they do have a common factor: 2.
-\step Which is absurd.
+\i If both are even they do have a common factor: 2.
+\i Which is absurd.
 
-\step Thus, our basic assumption is false.
+\i Thus, our basic assumption is false.
 \step[A] There are no such $a$ and $b$.
 
-\step The square root of 2 is irrational.
+\i The square root of 2 is irrational.
 \step Too bad.
 
 \endslide
