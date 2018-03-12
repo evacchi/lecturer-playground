@@ -3,62 +3,32 @@
 %
 % You can recompile the file with a basic TeX implementation,
 % using pdfTeX or LuaTeX with the plain format.
-%
+% 
 % The reusable part ends somewhere around line 300.
 %
 % Author: Paul Isambert.
-% Date: July 2010.
-
-\documentclass{article}
-
-\usepackage{luatex85}
-\usepackage{luaotfload}
-\RequirePackage{shellesc}
-\usepackage{minted}
-\usepackage{lecturer}
-\usepackage{fontspec}
-\usepackage{graphics}
-\usepackage{xcolor}
-\usepackage{markdown}
-\markdownSetup{fencedCode=true}
-
-\newcommand{\updatepalette}[1]{
-
-  \newcommand{\palette}[1]{
-   \usevalue #1: ##1
-  }
-  \newcommand{\setpalettekey}[1]{
-    \storevalue\ColorId palette: ##1 
-    \newcolor{##1}{rgb}{ 
-      \palette{\ColorId} 
-    }
-  } 
-
-  \setpalettekey{first-slide-background}
-  \setpalettekey{first-slide-title}
-  \setpalettekey{first-slide-subtitle}
-  \setpalettekey{slide-background}
-  \setpalettekey{slide-title-foreground}
-  \setpalettekey{slide-background}
-  \setpalettekey{slide-foreground}
-  \setpalettekey{item-color}
-}
-
-% \input luatex85.sty
-% \input luaotfload.sty
-% \input lecturer
-%%\setmainfont{Gill Sans}
+% Date: July 2010. 
 
 
-%\setmonofont{Fira Mono}
-\setmainfont{Fira Sans}
+\input{luatex85.sty}
+\input{luaotfload.sty}
+\input{source/highlight.sty}
+\input lecturer
+
 
 \font\maintitlefont    = {name: League Gothic} at 70pt
 \font\slidetitlefont   = {name: Reklame Script DEMO} at 30pt
-\font\slidetitlefont = {name: Fira Sans} at 20pt
+\font\slidetitlefont   = {name: Fira Sans} at 20pt
+\font\slidetitlefont   = {name: League Gothic} at 30pt
 \font\subtitlefont     = {name: Reklame Script DEMO}
 \font\mainsubtitlefont = {name: Reklame Script DEMO} at 30pt
 \font\titlefont        = {name: Fira Sans}
+\font\mainfont         = {name: Fira Sans}
+
+\newcolor{darkred}{rgb}{.6 0 0}
+\newcolor{lightgrey}{grey}{.85}
+\newcolor{darkgrey}{grey}{.7}
+
 
 
 \setparameter fresh-cut-day:
@@ -69,47 +39,6 @@
   feeble-week   = "0.56  0.75  0.00"
   black         = " 0 0 0 "
 
-\setparameter kotaku:
-  pink-drinks      = "0.89 0.11 0.35"
-  popular-girl     = "0.62 0.05 0.22"
-  grr-ey           = "0.20 0.20 0.20"
-  moonage-daydream = "0.98 1.00 0.89"
-  kotak            = "0.51 0.64 0.00"
-
-\setparameter vivacious:
-  kaaskop-pink    = "0.80 0.05 0.22"
-  orange-sakura   = "0.90 0.47 0.12"
-  spring-wind     = "0.78 0.81 0.01"
-  polpa-di-pera   = "0.97 0.99 0.76"
-  blue-lagoon     = "0.09 0.58 0.65"
-
-
-% \setparameter palette:
-%   first-slide-background = blue-lagoon
-%   first-slide-title      = kaaskop-pink
-%   first-slide-subtitle   = orange-sakura
-%   slide-background       = polpa-di-pera
-%   slide-title-foreground = kaaskop-pink
-%   slide-foreground       = blue-lagoon
-%   item-color             = spring-wind
-
-% \usemintedstyle{tango}
-% \updatepalette{vivacious}
-
-% \setparameter palette:
-%   first-slide-background = grr-ey
-%   first-slide-title      = popular-girl
-%   first-slide-subtitle   = pink-drinks
-%   slide-background       = grr-ey
-%   slide-title-foreground = kotak
-%   slide-foreground       = moonage-daydream
-%   item-color             = pink-drinks
-
-% \updatepalette{kotaku}
-% \usemintedstyle{monokai}
-
-
-
 \setparameter palette:
   first-slide-background = tropiteal
   first-slide-title      = whitetrash
@@ -119,10 +48,23 @@
   slide-background       = whitetrash
   item-color             = tropiteal
 
-\updatepalette{fresh-cut-day}
-\usemintedstyle{tango}
+%\updatepalette[fresh-cut-day]
+%tropiteal
+\newcolor{first-slide-background}{rgb}{0.00  0.66  0.78}
+\newcolor{first-slide-title}{rgb}{0.98  0.95  0.91}
+\def\setpalettekey#1#2#3{%
+  \newcolor{#1}{rgb}{
+    \usevalue #2 : #3
+  }
+}
 
-
+\setpalettekey{first-slide-background}{fresh-cut-day}{tropiteal}
+\setpalettekey{first-slide-title}{fresh-cut-day}{whitetrash}
+\setpalettekey{first-slide-subtitle}{fresh-cut-day}{whitetrash}
+\setpalettekey{slide-title-foreground}{fresh-cut-day}{feeble-week}
+\setpalettekey{slide-foreground}{fresh-cut-day}{black}
+\setpalettekey{slide-background}{fresh-cut-day}{whitetrash}
+\setpalettekey{item-color}{fresh-cut-day}{tropiteal}
 
 
 
@@ -132,27 +74,21 @@
   title          = "History of a Value"
   date           = "May, 4 2018"
   fullscreen     = true
-  autofullscreen = true
-  font           = \rmfamily
-
-\def\Subtitle{A Glimpse into the Future of the JVM}
-
-
+  autofullscreen = false
+  font           = \mainfont % Plain TeX's default, but must be specified
+                          % to set it back after a \step with another font.
+  
 \setparameter slide:
   everyslide    = \everyslide
-  % hsize         = ".6\pdfpagewidth"
-  top           = 56pt
+  hsize         = ".6\pdfpagewidth"
+  top           = 76pt
   bottom        = 42pt
-  areas*        = "title subtitle date"
+  width         = 16cm
+  height        = 9cm
+  areas*        = "title author date"
   bookmarkstyle = italic
   baselineskip  = 12pt
   topskip       = \baselineskip
-  width         = 16cm
-  height        = 9cm
-  background    = slide-background
-  foreground    = slide-foreground
-  % left          = 1cm % default 2cm
-  % right         = 1cm
 
 \def\everyslide{%
   \position{titlebar}\slidetitle
@@ -160,53 +96,69 @@
 
 %
 % Top and bottom bars.
-%
+% 
+
 \setarea{topleft topright bottomleft bottommiddle bottomright}
   height = 18pt
 
-
 \setarea{titlebar}
-  vshift     = 15pt
-  left       = 3em
+  vshift     = 18pt
+  left       = 1em
   height     = 40pt
-  % background = lightgrey
   foreground = slide-title-foreground
   topskip    = 30pt
   hpos       = fr
   font       = \slidetitlefont
+
+% bottomleft is already fully specified.
+  
+
+%
+% The maths on the right.
+%
+\setarea{math}
+  width      = ".2\pdfpagewidth"
+  hshift*    = 0pt
+  vshift     = 58pt
+  vshift*    = 18pt
+  foreground = "grey .75"
+  hpos       = fr
+  vpos       = center
+  baselineskip = 18pt
 
 
 %
 % The title slide.
 %
 \setslide{titleslide}
-  areas      = "title subtitle"
+  areas      = "title topleft topright"
   bookmark   = false
+  foreground = first-slide-title
+  background = first-slide-background
   hpos       = rr
   everyslide = {}
-  background = first-slide-background
 
 \setarea{title}
   hshift*    = 1cm
   vshift     = 2.5cm
   height     = 45pt
-  topskip    = 50pt
-  foreground = first-slide-title
+  topskip    = 25pt
   top        = 1em
   %frame      = "width=.2em, corner=round, color=darkgrey"
   hpos       = rr
   font       = \maintitlefont
+  foreground = first-slide-title
 
-\setarea{subtitle}
-  hshift*    = 1cm
-  vshift     = 5.5cm
+\setarea{author}
+  hshift*    = 5cm
+  vshift     = 6cm
   height     = 28pt
   topskip    = 20pt
-  foreground = first-slide-subtitle
-  frame      = "width=.2em, corner=round"
+  foreground = white
+  frame      = "width=.5em, corner=round"
   hpos       = rr
-  font       = \mainsubtitlefont
-
+  font       = \slidetitlefont
+  
 \setarea{date}
   hshift*    = 5.5cm
   vshift     = 9cm
@@ -218,34 +170,35 @@
   frame      = "width=.5em, corner=bevel, color=lightgrey"
   hpos       = rr
 
-
 %
 % Default step.
 %
 \setparameter step:
   everyvstep = "\quitvmode\llap{\itemsymbol\kern.5em}"
-  vskip = 14pt
+  vskip = 18pt
 
 \def\i{\vskip14pt\quitvmode\llap{\itemsymbol\kern.5em}}
-
-%
-% Foreground math.
-%
-\setstep\emptystep
-  everyvstep everyhstep = {}
-  vskip hskip = 0pt
 
 %
 % Item symbols.
 %
 \newsymbol\itemsymbol[.6em,padding=0pt]
-  {color item-color, + 1 0, + 0 1, + -1 0, fill,}
+  {color darkred, + 1 0, + 0 1, + -1 0, fill,}
 \newsymbol\mathsym[.5em,padding=0pt]
-  {color item-color,
+  {color darkred, 
   + 1 .5, + -1 .5, fill,}
 \newsymbol\backsym[.5em,padding=0pt]
-  {color item-color, move 1 0, + -1 .5, + 1 .5, fill,}
-
+  {color darkred, move 1 0, + -1 .5, + 1 .5, fill,}
+%
+% Navigation to the appendices.
+%
+\def\Back#1{%
+  \presentationonly{\usecolor{darkred}{\gotoB{#1}{\subtitlefont\backsym\kern.3em Back}}}%
+  }
+\def\To#1{%
+  \presentationorhandout{\usecolor{darkred}{\gotoA{#1}{\subtitlefont\mathsym\kern.3em See why}}}
+    {{\usecolor{darkred}{\subtitlefont\mathsym\kern.3em(See Appendices)}}}%
+  }
 %
 % And some structure.
 %
@@ -264,12 +217,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\begin{document}
+
 \titleslide
 
 \position{title}\Title
-%\position{author}[0cm,-1.7cm]{\it\usecolor{black}{A Casual Talk By}}
-\position{subtitle}\Subtitle
+\position{author}\Author
 \position{date}\Date
 
 \endtitleslide
@@ -277,93 +229,41 @@
 
 
 
-
 \section{Demonstration}
 
-
-\begin{slide}[Section 2]
-
-baz
-
-
-\end{slide}
-
-\begin{slide}[Section 3]
-
-
-\i bazasdsad
-asdsad
-
-\i asda
-sad
-
-\i asdasds
-
-\begin{markdown}
-
-
-~~~java
-
-public class Test {
-    public static void main(String[] args) {
-        System.out.println("lol code");
-    }
-}
-~~~
-
-\end{markdown}
-
-
-
-
-
-\end{slide}
-
-\begin{slide}[Code]
-
-\begin{minted}{java}
-public class Test {
-    public static void main(String[] args) {
-        System.out.println("lol code");
-    }
-}
-\end{minted}
-
-\end{slide}
+\slide[Code]
+\input{source/HelloWorld.java}
+\endslide
 
 \slide[A simple assumption]
 
-\i Some say the square root of 2 isn't rational.
-\i Suppose
- were.
 
-\i Then we could write it as this, where $a$ and $b$ are
+\i Some say the square root of 2 isn't rational.
+\i Suppose it were.
+
+\i[A] Then we could write it as this, where $a$ and $b$ are
 integers without a common factor.
 
-\i But then we can also write this.
-\i And this.
-\i And finally this.
+\i[B] But then we can also write this.
+\i[C] And this.
+\i[D] And finally this.
 \i Which means that $a^2$ is even.
 
 \endslide
 
 
-\begin{slide}[Some source code]
-  \inputminted[fontsize=\small]{kotlin}{source/fizzbuzz.kt}
-\end{slide}
-
 
 \slide[Its consequences]
 
 
-\i So what?
+\i[visible="true"] So what?
 \i So $a$ is even. Because only even numbers produce even squares.
 
-\i Being even means being expressible in the form $2k$, where $k$ is
+\i[A] Being even means being expressible in the form $2k$, where $k$ is
 any integer.
-\i And $(2k)^2$ square gives $4k^2$.
+\i[B] And $(2k)^2$ square gives $4k^2$.
 
-\i Let's simplify.
+\i[C] Let's simplify.
 \i Thus $b^2$ is even.
 \i And $b$ is too.
 
@@ -373,23 +273,23 @@ any integer.
 
 \slide[The problem]
 
-% \domath7 A {}
 
-\i And but so we said $a$ and $b$ have no common factor.
+\i[visible=true] And but so we said $a$ and $b$ have no common factor.
 
 \i If both are even they do have a common factor: 2.
 \i Which is absurd.
 
 \i Thus, our basic assumption is false.
-\step[A] There are no such $a$ and $b$.
+\i[A] There are no such $a$ and $b$.
 
 \i The square root of 2 is irrational.
-\step Too bad.
+\i Too bad.
 
 \endslide
 
 
 
+\bye
 
 
-\end{document}
+

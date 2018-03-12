@@ -1,0 +1,395 @@
+% This is a demonstration file distributed with the
+% Lecturer package (see lecturer-doc.pdf).
+%
+% You can recompile the file with a basic TeX implementation,
+% using pdfTeX or LuaTeX with the plain format.
+%
+% The reusable part ends somewhere around line 300.
+%
+% Author: Paul Isambert.
+% Date: July 2010.
+
+\documentclass{article}
+
+\usepackage{luatex85}
+\usepackage{luaotfload}
+\RequirePackage{shellesc}
+\usepackage{minted}
+\usepackage{lecturer}
+\usepackage{fontspec}
+\usepackage{graphics}
+\usepackage{xcolor}
+\usepackage{markdown}
+\markdownSetup{fencedCode=true}
+
+
+\newcommand{\updatepalette}[1]{
+
+  \newcommand{\palette}[1]{
+   \usevalue #1: ##1
+  }
+  \newcommand{\setpalettekey}[1]{
+    \storevalue\ColorId palette: ##1 
+    \newcolor{##1}{rgb}{ 
+      \palette{\ColorId} 
+    }
+  } 
+
+  \setpalettekey{first-slide-background}
+  \setpalettekey{first-slide-title}
+  \setpalettekey{first-slide-subtitle}
+  \setpalettekey{slide-background}
+  \setpalettekey{slide-title-foreground}
+  \setpalettekey{slide-background}
+  \setpalettekey{slide-foreground}
+  \setpalettekey{item-color}
+}
+
+% \input luatex85.sty
+% \input luaotfload.sty
+% \input lecturer
+%%\setmainfont{Gill Sans}
+
+
+%\setmonofont{Fira Mono}
+\setmainfont{Fira Sans}
+
+\font\maintitlefont    = {name: League Gothic} at 70pt
+\font\slidetitlefont   = {name: Reklame Script DEMO} at 30pt
+\font\slidetitlefont = {name: Fira Sans} at 20pt
+\font\subtitlefont     = {name: Reklame Script DEMO}
+\font\mainsubtitlefont = {name: Reklame Script DEMO} at 30pt
+\font\titlefont        = {name: Fira Sans}
+
+
+\setparameter fresh-cut-day:
+  tropiteal     = "0.00  0.66  0.78"
+  teal-drop     = "0.25  0.75  0.80"
+  whitetrash    = "0.98  0.95  0.91"
+  atomic-bikini = "0.68  0.89  0.22"
+  feeble-week   = "0.56  0.75  0.00"
+  black         = " 0 0 0 "
+
+\setparameter kotaku:
+  pink-drinks      = "0.89 0.11 0.35"
+  popular-girl     = "0.62 0.05 0.22"
+  grr-ey           = "0.20 0.20 0.20"
+  moonage-daydream = "0.98 1.00 0.89"
+  kotak            = "0.51 0.64 0.00"
+
+\setparameter vivacious:
+  kaaskop-pink    = "0.80 0.05 0.22"
+  orange-sakura   = "0.90 0.47 0.12"
+  spring-wind     = "0.78 0.81 0.01"
+  polpa-di-pera   = "0.97 0.99 0.76"
+  blue-lagoon     = "0.09 0.58 0.65"
+
+
+% \setparameter palette:
+%   first-slide-background = blue-lagoon
+%   first-slide-title      = kaaskop-pink
+%   first-slide-subtitle   = orange-sakura
+%   slide-background       = polpa-di-pera
+%   slide-title-foreground = kaaskop-pink
+%   slide-foreground       = blue-lagoon
+%   item-color             = spring-wind
+
+% \usemintedstyle{tango}
+% \updatepalette{vivacious}
+
+% \setparameter palette:
+%   first-slide-background = grr-ey
+%   first-slide-title      = popular-girl
+%   first-slide-subtitle   = pink-drinks
+%   slide-background       = grr-ey
+%   slide-title-foreground = kotak
+%   slide-foreground       = moonage-daydream
+%   item-color             = pink-drinks
+
+% \updatepalette{kotaku}
+% \usemintedstyle{monokai}
+
+
+
+\setparameter palette:
+  first-slide-background = tropiteal
+  first-slide-title      = whitetrash
+  first-slide-subtitle   = whitetrash
+  slide-title-foreground = feeble-week
+  slide-foreground       = black
+  slide-background       = whitetrash
+  item-color             = tropiteal
+
+\updatepalette{fresh-cut-day}
+\usemintedstyle{tango}
+
+
+
+
+
+\setparameter job:
+  mode           = presentation % The handout is ready, just turn it on.
+  author         = "Edoardo Vacchi"
+  title          = "History of a Value"
+  date           = "May, 4 2018"
+  fullscreen     = true
+  autofullscreen = true
+  font           = \rmfamily
+
+\def\Subtitle{A Glimpse into the Future of the JVM}
+
+
+\setparameter slide:
+  everyslide    = \everyslide
+  % hsize         = ".6\pdfpagewidth"
+  top           = 56pt
+  bottom        = 42pt
+  areas*        = "title subtitle date"
+  bookmarkstyle = italic
+  baselineskip  = 12pt
+  topskip       = \baselineskip
+  width         = 16cm
+  height        = 9cm
+  background    = slide-background
+  foreground    = slide-foreground
+  % left          = 1cm % default 2cm
+  % right         = 1cm
+
+\def\everyslide{%
+  \position{titlebar}\slidetitle
+}
+
+%
+% Top and bottom bars.
+%
+\setarea{topleft topright bottomleft bottommiddle bottomright}
+  height = 18pt
+
+
+\setarea{titlebar}
+  vshift     = 15pt
+  left       = 3em
+  height     = 40pt
+  % background = lightgrey
+  foreground = slide-title-foreground
+  topskip    = 30pt
+  hpos       = fr
+  font       = \slidetitlefont
+
+
+%
+% The title slide.
+%
+\setslide{titleslide}
+  areas      = "title subtitle"
+  bookmark   = false
+  hpos       = rr
+  everyslide = {}
+  background = first-slide-background
+
+\setarea{title}
+  hshift*    = 1cm
+  vshift     = 2.5cm
+  height     = 45pt
+  topskip    = 50pt
+  foreground = first-slide-title
+  top        = 1em
+  %frame      = "width=.2em, corner=round, color=darkgrey"
+  hpos       = rr
+  font       = \maintitlefont
+
+\setarea{subtitle}
+  hshift*    = 1cm
+  vshift     = 5.5cm
+  height     = 28pt
+  topskip    = 20pt
+  foreground = first-slide-subtitle
+  frame      = "width=.2em, corner=round"
+  hpos       = rr
+  font       = \mainsubtitlefont
+
+\setarea{date}
+  hshift*    = 5.5cm
+  vshift     = 9cm
+  height     = 22pt
+  topskip    = 10pt
+  background = white
+  foreground = black
+  top        = 5pt
+  frame      = "width=.5em, corner=bevel, color=lightgrey"
+  hpos       = rr
+
+
+%
+% Default step.
+%
+\setparameter step:
+  everyvstep = "\quitvmode\llap{\itemsymbol\kern.5em}"
+  vskip = 14pt
+
+\def\i{\vskip14pt\quitvmode\llap{\itemsymbol\kern.5em}}
+
+%
+% Foreground math.
+%
+\setstep\emptystep
+  everyvstep everyhstep = {}
+  vskip hskip = 0pt
+
+%
+% Item symbols.
+%
+\newsymbol\itemsymbol[.6em,padding=0pt]
+  {color item-color, + 1 0, + 0 1, + -1 0, fill,}
+\newsymbol\mathsym[.5em,padding=0pt]
+  {color item-color,
+  + 1 .5, + -1 .5, fill,}
+\newsymbol\backsym[.5em,padding=0pt]
+  {color item-color, move 1 0, + -1 .5, + 1 .5, fill,}
+
+%
+% And some structure.
+%
+\def\section#1{%
+  \def\sectiontitle{#1}%
+  \createbookmark[nosubmenutext,open]{.5}{#1}%
+  }
+
+
+% \endinput
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                                             %
+% UNCOMMENT THE PREVIOUS LINE TO USE THIS FILE AS A TEMPLATE, %
+% OR REMOVE EVERYTHING BELOW.                                 %
+%                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\titleslide
+
+\position{title}\Title
+%\position{author}[0cm,-1.7cm]{\it\usecolor{black}{A Casual Talk By}}
+\position{subtitle}\Subtitle
+\position{date}\Date
+
+\endtitleslide
+
+
+
+
+
+\section{Demonstration}
+
+
+\begin{slide}[Section 2]
+
+baz
+
+\end{slide}
+
+\begin{slide}[Section 3]
+
+
+\i bazasdsad
+asdsad
+
+\i asda
+sad
+
+\i asdasds
+
+\begin{markdown}
+
+
+~~~java
+
+public class Test {
+    public static void main(String[] args) {
+        System.out.println("lol code");
+    }
+}
+~~~
+
+\end{markdown}
+
+
+
+
+
+\end{slide}
+
+\begin{slide}[Code]
+
+\begin{minted}{java}
+public class Test {
+    public static void main(String[] args) {
+        System.out.println("lol code");
+    }
+}
+\end{minted}
+
+\end{slide}
+
+\slide[A simple assumption]
+
+\i Some say the square root of 2 isn't rational.
+\i Suppose
+ were.
+
+\i Then we could write it as this, where $a$ and $b$ are
+integers without a common factor.
+
+\i But then we can also write this.
+\i And this.
+\i And finally this.
+\i Which means that $a^2$ is even.
+
+\endslide
+
+
+\begin{slide}[Some source code]
+  \inputminted[fontsize=\small]{kotlin}{source/fizzbuzz.kt}
+\end{slide}
+
+
+\slide[Its consequences]
+
+
+\i So what?
+\i So $a$ is even. Because only even numbers produce even squares.
+
+\i Being even means being expressible in the form $2k$, where $k$ is
+any integer.
+\i And $(2k)^2$ square gives $4k^2$.
+
+\i Let's simplify.
+\i Thus $b^2$ is even.
+\i And $b$ is too.
+
+\endslide
+
+
+
+\slide[The problem]
+
+% \domath7 A {}
+
+\i And but so we said $a$ and $b$ have no common factor.
+
+\i If both are even they do have a common factor: 2.
+\i Which is absurd.
+
+\i Thus, our basic assumption is false.
+\step[A] There are no such $a$ and $b$.
+
+\i The square root of 2 is irrational.
+\step Too bad.
+
+\endslide
+
+
+
+
+
+\end{document}
