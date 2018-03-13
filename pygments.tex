@@ -1,0 +1,37 @@
+\font\tt = {name: Fira Code Regular} at 8pt
+\font\ttbf = {name: Fira Code Bold} at 8pt
+\def\PYk#1{{\ttbf #1}}
+\def\PYn#1{#1}
+\def\PYo#1{#1}
+\def\PYl#1{#1}
+\def\PYc#1{#1}
+\def\PYn#1{#1}
+\def\PYp#1{#1}
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+%% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+
+\def\uncatcodespecials{\def\do##1{\catcode`##1=12 }\do\ }%\dospecials}
+\def\setupverbatim{\tt
+  \obeylines
+  \obeyspaces
+  \uncatcodespecials
+}
+\def\listing#1{\par\begingroup%
+\setupverbatim\input#1 \endgroup}
