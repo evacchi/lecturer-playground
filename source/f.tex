@@ -1,0 +1,25 @@
+\input macros.in
+\begingroup
+\parindent=0pt\relax
+\obeyspaces%
+\let =\ %
+\obeylines%
+{\tt\PYk{public} \PYk{class} \PYn{Point} \PYo{\PYZob}
+    \PYk{double} \PYn{x}\PYo{;}
+    \PYk{double} \PYn{y}\PYo{;}
+    \PYk{public} \PYn{Point}\PYo{(}\PYk{double} \PYn{x\PYZus{}}\PYo{,} \PYk{double} \PYn{y\PYZus{}}\PYo{)} \PYo{\PYZob} 
+        \PYn{x} \PYo{=} \PYn{x\PYZus{}}\PYo{;} \PYn{y} \PYo{=} \PYn{y\PYZus{}}\PYo{;} 
+    \PYo{\PYZcb}
+    \PYk{public} \PYk{static} \PYk{void} \PYn{main}\PYo{(}\PYn{String}\PYo{.}\PYo{.}\PYo{.} \PYn{args}\PYo{)} \PYo{\PYZob}
+        \PYn{var} \PYn{p} \PYo{=} \PYk{new} \PYn{Point}\PYo{(}\PYl{1.0}\PYo{,} \PYl{2.0}\PYo{)}\PYo{;}
+        \PYn{Point}\PYo{[}\PYo{]} \PYn{ps} \PYo{=} \PYo{\PYZob}
+            \PYk{new} \PYn{Point}\PYo{(}\PYl{1.0}\PYo{,} \PYl{2.0}\PYo{)}\PYo{,}
+            \PYk{new} \PYn{Point}\PYo{(}\PYl{1.1}\PYo{,} \PYl{2.1}\PYo{)}\PYo{,}
+            \PYk{new} \PYn{Point}\PYo{(}\PYl{2.0}\PYo{,} \PYl{3.0}\PYo{)}\PYo{,}
+        \PYo{\PYZcb}\PYo{;}        
+    \PYo{\PYZcb}
+\PYo{\PYZcb}
+}
+\endgroup%
+
+\bye
